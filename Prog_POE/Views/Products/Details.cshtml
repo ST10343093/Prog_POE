@@ -1,0 +1,128 @@
+﻿@model Prog_POE.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-5"><i class="bi bi-basket-fill text-success me-3"></i>@Model.Name</h1>
+            <p class="lead">
+                @if (Model.IsOrganic)
+                {
+                    <span class="badge bg-success me-2"><i class="bi bi-leaf-fill me-1"></i>Organic</span>
+                }
+                <span class="text-muted">@Model.Category</span>
+            </p>
+        </div>
+        <div class="col-md-4 text-end align-self-center">
+            @if (Context.Session.GetString("Role") == "Farmer" && int.Parse(Context.Session.GetString("UserId")) == Model.FarmerId)
+            {
+                <a asp-action="MyProducts" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to My Products
+                </a>
+            }
+            else
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Products
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card shadow mb-4">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name">
+                }
+                else
+                {
+                    <div class="bg-light text-center py-5">
+                        <i class="bi bi-image text-muted" style="font-size: 8rem;"></i>
+                        <p class="text-muted mt-3">No image available</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card shadow h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Product Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h3 class="text-success mb-3">R @Model.Price</h3>
+                        <p>@Model.Description</p>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="border-bottom pb-2">Details</h5>
+                            <dl class="row">
+                                <dt class="col-sm-5">Category:</dt>
+                                <dd class="col-sm-7">@Model.Category</dd>
+
+                                <dt class="col-sm-5">Production Date:</dt>
+                                <dd class="col-sm-7">@Model.ProductionDate.ToShortDateString()</dd>
+
+                                <dt class="col-sm-5">Organic:</dt>
+                                <dd class="col-sm-7">
+                                    @if (Model.IsOrganic)
+                                    {
+                                        <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="border-bottom pb-2">Supplier Information</h5>
+                            <dl class="row">
+                                <dt class="col-sm-5">Farm:</dt>
+                                <dd class="col-sm-7">@Model.Farmer.FarmName</dd>
+
+                                <dt class="col-sm-5">Farmer:</dt>
+                                <dd class="col-sm-7">@Model.Farmer.FirstName @Model.Farmer.LastName</dd>
+
+                                <dt class="col-sm-5">Location:</dt>
+                                <dd class="col-sm-7">@Model.Farmer.FarmLocation</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5 class="border-bottom pb-2">Sustainable Practices</h5>
+                        <p>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            @if (Model.IsOrganic)
+                            {
+                                <span>This product is grown using certified organic practices without synthetic pesticides or fertilizers.</span>
+                            }
+                            else
+                            {
+                                <span>This product is grown using sustainable agricultural practices.</span>
+                            }
+                        </p>
+                        <p><i class="bi bi-check-circle-fill text-success me-2"></i>Supports local farming communities and reduces carbon footprint through local distribution.</p>
+                    </div>
+
+                    @if (Context.Session.GetString("Role") == "Employee")
+                    {
+                        <div class="d-grid gap-2 mt-4">
+                            <a asp-controller="Products" asp-action="FarmerProducts" asp-route-id="@Model.FarmerId" class="btn btn-outline-primary">
+                                <i class="bi bi-basket me-2"></i>View All Products from this Farmer
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+﻿@model Prog_POE.Models.Product
+
+@{
+    ViewData["Title"] = "Add New Product";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5"><i class="bi bi-basket-plus text-success me-3"></i>Add New Product</h1>
+            <p class="lead">Add a new sustainable agricultural product to your profile.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Product Details</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label">Product Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Category" class="form-label">Category</label>
+                                    <select asp-for="Category" class="form-select">
+                                        <option value="">-- Select Category --</option>
+                                        <option value="Vegetables">Vegetables</option>
+                                        <option value="Fruits">Fruits</option>
+                                        <option value="Grains">Grains</option>
+                                        <option value="Dairy">Dairy</option>
+                                        <option value="Meat">Meat</option>
+                                        <option value="Poultry">Poultry</option>
+                                        <option value="Eggs">Eggs</option>
+                                        <option value="Honey">Honey</option>
+                                        <option value="Herbs">Herbs</option>
+                                        <option value="Nuts">Nuts</option>
+                                        <option value="Sweeteners">Sweeteners</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <span asp-validation-for="Category" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ProductionDate" class="form-label">Production Date</label>
+                                    <input asp-for="ProductionDate" class="form-control" type="date" />
+                                    <span asp-validation-for="ProductionDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Price" class="form-label">Price (ZAR)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R</span>
+                                        <input asp-for="Price" class="form-control" type="number" step="0.01" min="0" placeholder="0.00" />
+                                    </div>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="IsOrganic" class="form-label d-block">Is this product organic?</label>
+                                    <div class="form-check form-check-inline mt-2">
+                                        <input asp-for="IsOrganic" class="form-check-input" type="checkbox" id="isOrganic" />
+                                        <label class="form-check-label" for="isOrganic">Yes, this product is certified organic</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="form-label">Product Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter a detailed description of your product"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="ImageUrl" class="form-label">Image URL</label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="Enter URL to product image" />
+                            <small class="form-text text-muted">Optional: Enter a URL for the product image. You can use placeholder images like /images/products/vegetables.jpg</small>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="MyProducts" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i>Create Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,88 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="display-4">Welcome to Agri-Energy Connect</h1>
+                            <p class="lead">Bridging the gap between sustainable agriculture and green energy solutions.</p>
+                            <hr class="my-4 bg-white">
+                            <p>Explore our platform to connect with farmers, discover green energy solutions, and participate in a sustainable future.</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="bi bi-leaf-fill" style="font-size: 8rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow border-primary">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill text-primary" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">@ViewBag.FarmerCount</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">Registered Farmers</h6>
+                    <p class="card-text">Connect with farmers who are committed to sustainable agricultural practices.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow border-success">
+                <div class="card-body text-center">
+                    <i class="bi bi-basket-fill text-success" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">@ViewBag.ProductCount</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">Total Products</h6>
+                    <p class="card-text">Browse through a variety of sustainable and locally produced agricultural products.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow border-warning">
+                <div class="card-body text-center">
+                    <i class="bi bi-award-fill text-warning" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">@ViewBag.OrganicProductCount</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">Organic Products</h6>
+                    <p class="card-text">Discover certified organic products that prioritize environmental sustainability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i>About Agri-Energy Connect</h5>
+                </div>
+                <div class="card-body">
+                    <p>Agri-Energy Connect is a pioneering platform that bridges the gap between sustainable agriculture and green energy solutions. Our mission is to create a collaborative ecosystem where farmers, energy experts, and enthusiasts can share knowledge, resources, and innovations.</p>
+                    <p>We believe that the future of agriculture lies in sustainable practices, and integrating green energy technologies is a crucial step towards this goal. By connecting these two sectors, we aim to foster a more sustainable and environmentally friendly approach to farming.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-lightbulb-fill me-2"></i>Key Features</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Sustainable Farming Hub</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Green Energy Marketplace</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Educational Resources</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Project Collaboration</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Funding Opportunities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
