@@ -1,0 +1,149 @@
+﻿@model Prog_POE.Models.User
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5"><i class="bi bi-person-gear text-success me-3"></i>Edit Your Profile</h1>
+            <p class="lead">Update your personal information and farm details.</p>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Profile Information</h5>
+                </div>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger m-3">
+                        <h5><i class="bi bi-exclamation-triangle-fill me-2"></i>Please correct the following errors:</h5>
+                        <ul>
+                            @foreach (var modelState in ViewData.ModelState.Values)
+                            {
+                                foreach (var error in modelState.Errors)
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <div class="card-body p-4">
+                    <!-- Debug information -->
+                    <div class="alert alert-info mb-3">
+                        <p><strong>Debug Info:</strong> Submitting to: @Url.Action("Edit", "Farmers")</p>
+                        <p><strong>User ID:</strong> @Model.UserId</p>
+                        <p><strong>Role:</strong> @Model.Role</p>
+                    </div>
+
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <input type="hidden" asp-for="UserId" />
+                        <input type="hidden" asp-for="Role" />
+                        <input type="hidden" asp-for="Password" />
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FirstName" class="form-control" id="FirstName" placeholder="Enter first name" required />
+                                    <label asp-for="FirstName" class="form-label">First Name</label>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LastName" class="form-control" id="LastName" placeholder="Enter last name" required />
+                                    <label asp-for="LastName" class="form-label">Last Name</label>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Username" class="form-control" id="Username" placeholder="Username" required />
+                                    <label asp-for="Username" class="form-label">Username</label>
+                                    <span asp-validation-for="Username" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input name="NewPassword" class="form-control" id="NewPassword" type="password" placeholder="New password (leave blank to keep current)" />
+                                    <label for="NewPassword" class="form-label">New Password (Optional)</label>
+                                    <small class="form-text text-muted">Leave blank to keep your current password.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" id="Email" type="email" placeholder="Enter email address" required />
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <hr class="my-4" />
+                        <h5 class="mb-3">Farm Information</h5>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FarmName" class="form-control" id="FarmName" placeholder="Enter farm name" required />
+                            <label asp-for="FarmName" class="form-label">Farm Name</label>
+                            <span asp-validation-for="FarmName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FarmLocation" class="form-control" id="FarmLocation" placeholder="Enter farm location (e.g., Western Cape)" required />
+                            <label asp-for="FarmLocation" class="form-label">Farm Location</label>
+                            <span asp-validation-for="FarmLocation" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <textarea asp-for="FarmDescription" class="form-control" id="FarmDescription" style="height: 100px" placeholder="Enter a description of the farm, its specialties, and sustainable practices"></textarea>
+                            <label asp-for="FarmDescription" class="form-label">Farm Description</label>
+                            <span asp-validation-for="FarmDescription" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Profile" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -25,6 +25,14 @@
         </div>
     }
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     @if (Model.Any())
     {
         <div class="row">
@@ -62,6 +70,9 @@
                             <div class="d-grid gap-2 mt-2">
                                 <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-outline-primary btn-sm">
                                     <i class="bi bi-info-circle me-1"></i>View Details
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash me-1"></i>Delete Product
                                 </a>
                             </div>
                         </div>

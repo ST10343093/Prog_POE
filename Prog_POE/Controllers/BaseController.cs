@@ -9,16 +9,16 @@ namespace Prog_POE.Controllers
         {
             base.OnActionExecuting(context);
 
+            // Allow anonymous access to specific pages
+            if (context.ActionDescriptor.DisplayName.Contains("Landing") ||
+                context.Controller is AuthController)
+            {
+                return;
+            }
+
             // Check if user is logged in
             if (HttpContext.Session.GetString("UserId") == null)
             {
-                // If the controller is AuthController, allow execution
-                if (context.Controller is AuthController)
-                {
-                    return;
-                }
-
-                // Otherwise redirect to login
                 context.Result = new RedirectToActionResult("Login", "Auth", null);
                 return;
             }

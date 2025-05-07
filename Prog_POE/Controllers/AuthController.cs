@@ -55,5 +55,48 @@ namespace Prog_POE.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+
+        // GET: Auth/Register
+        public IActionResult Register()
+        {
+            // Check if user is already logged in
+            if (HttpContext.Session.GetString("UserId") != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        // POST: Auth/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(User user)
+        {
+            // Check if username already exists
+            if (await _context.Users.AnyAsync(u => u.Username == user.Username))
+            {
+                ModelState.AddModelError("Username", "This username is already taken.");
+                return View(user);
+            }
+
+            // Set role to Farmer (by default, new registrations are for farmers)
+            user.Role = "Farmer";
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+
+                // Log the user in automatically
+                HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("Role", user.Role);
+                HttpContext.Session.SetString("FullName", $"{user.FirstName} {user.LastName}");
+
+                TempData["SuccessMessage"] = "Registration successful! Welcome to Agri-Energy Connect.";
+                return RedirectToAction("Index", "Home");
+            }
+            return View(user);
+        }
     }
 }

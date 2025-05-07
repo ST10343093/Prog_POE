@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Add New Farmer";
+
+    // Get form data from TempData if available
+    var formData = TempData["FormData"] as dynamic;
 }
 
 <div class="container-fluid py-4">
@@ -12,6 +15,26 @@
         </div>
     </div>
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto">
+                <div class="alert alert-danger">
+                    <h5><i class="bi bi-exclamation-triangle-fill me-2"></i>Please correct the following errors:</h5>
+                    <ul>
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            foreach (var error in modelState.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card shadow">
@@ -19,20 +42,22 @@
                     <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Farmer Details</h5>
                 </div>
                 <div class="card-body p-4">
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <form asp-action="Create" id="createFarmerForm">
+                        <!-- Add hidden field for Role -->
+                        <input type="hidden" asp-for="Role" value="Farmer" />
+
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="FirstName" class="form-control" id="FirstName" placeholder="Enter first name" required value="@(formData?.FirstName ?? "")" />
                                     <label asp-for="FirstName" class="form-label">First Name</label>
-                                    <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
                                     <span asp-validation-for="FirstName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="LastName" class="form-control" id="LastName" placeholder="Enter last name" required value="@(formData?.LastName ?? "")" />
                                     <label asp-for="LastName" class="form-label">Last Name</label>
-                                    <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -40,45 +65,45 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Username" class="form-control" id="Username" placeholder="Create a username" required value="@(formData?.Username ?? "")" />
                                     <label asp-for="Username" class="form-label">Username</label>
-                                    <input asp-for="Username" class="form-control" placeholder="Create a username" />
                                     <span asp-validation-for="Username" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Password" class="form-control" id="Password" type="password" placeholder="Create a password" required />
                                     <label asp-for="Password" class="form-label">Password</label>
-                                    <input asp-for="Password" class="form-control" type="password" placeholder="Create a password" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" id="Email" type="email" placeholder="Enter email address" required value="@(formData?.Email ?? "")" />
                             <label asp-for="Email" class="form-label">Email Address</label>
-                            <input asp-for="Email" class="form-control" type="email" placeholder="Enter email address" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <hr class="my-4" />
                         <h5 class="mb-3">Farm Information</h5>
 
-                        <div class="form-group mb-3">
+                        <div class="form-floating mb-3">
+                            <input asp-for="FarmName" class="form-control" id="FarmName" placeholder="Enter farm name" required value="@(formData?.FarmName ?? "")" />
                             <label asp-for="FarmName" class="form-label">Farm Name</label>
-                            <input asp-for="FarmName" class="form-control" placeholder="Enter farm name" />
                             <span asp-validation-for="FarmName" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="form-floating mb-3">
+                            <input asp-for="FarmLocation" class="form-control" id="FarmLocation" placeholder="Enter farm location (e.g., Western Cape)" required value="@(formData?.FarmLocation ?? "")" />
                             <label asp-for="FarmLocation" class="form-label">Farm Location</label>
-                            <input asp-for="FarmLocation" class="form-control" placeholder="Enter farm location (e.g., Western Cape)" />
                             <span asp-validation-for="FarmLocation" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mb-4">
+                        <div class="form-floating mb-4">
+                            <textarea asp-for="FarmDescription" class="form-control" id="FarmDescription" style="height: 100px" placeholder="Enter a description of the farm, its specialties, and sustainable practices" required>@(formData?.FarmDescription ?? "")</textarea>
                             <label asp-for="FarmDescription" class="form-label">Farm Description</label>
-                            <textarea asp-for="FarmDescription" class="form-control" rows="4" placeholder="Enter a description of the farm, its specialties, and sustainable practices"></textarea>
                             <span asp-validation-for="FarmDescription" class="text-danger"></span>
                         </div>
 

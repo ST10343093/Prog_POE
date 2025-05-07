@@ -90,7 +90,11 @@
                         <div class="form-group mb-4">
                             <label asp-for="ImageUrl" class="form-label">Image URL</label>
                             <input asp-for="ImageUrl" class="form-control" placeholder="Enter URL to product image" />
-                            <small class="form-text text-muted">Optional: Enter a URL for the product image. You can use placeholder images like /images/products/vegetables.jpg</small>
+                            <small class="form-text text-muted">
+                                You can enter either:
+                                <br>• A local image name (e.g., vegetables.jpg)
+                                <br>• A full internet URL (e.g., https://example.com/image.jpg)
+                            </small>
                             <span asp-validation-for="ImageUrl" class="text-danger"></span>
                         </div>
 

@@ -1,0 +1,190 @@
+﻿@{
+    ViewData["Title"] = "Welcome to Agri-Energy Connect";
+    Layout = "_LandingLayout";
+}
+
+<!-- Hero Section -->
+<section class="hero-section position-relative">
+    <div class="hero-overlay"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-7 text-white">
+                <h1 class="display-3 fw-bold mb-4 text-shadow">Bridging Agriculture & Green Energy</h1>
+                <p class="lead mb-5 text-shadow">Join our innovative platform connecting farmers with sustainable energy solutions for a greener future.</p>
+                <div class="d-flex gap-3">
+                    <a href="@Url.Action("Login", "Auth")" class="btn btn-success btn-lg px-4 py-3">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </a>
+                    <a href="@Url.Action("Register", "Auth")" class="btn btn-outline-light btn-lg px-4 py-3">
+                        <i class="bi bi-person-plus me-2"></i>Register
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-success">Why Join Agri-Energy Connect?</h2>
+            <p class="lead text-muted">Our platform offers unique features designed for sustainable agriculture and green energy integration</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success text-white mx-auto mb-4">
+                            <i class="bi bi-building-fill-gear"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Sustainable Farming Hub</h4>
+                        <p class="card-text">Access resources, best practices, and connect with experts in sustainable farming techniques and regenerative agriculture.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success text-white mx-auto mb-4">
+                            <i class="bi bi-shop"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Green Energy Marketplace</h4>
+                        <p class="card-text">Discover and compare solar, wind, and biogas solutions specifically designed for agricultural applications.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success text-white mx-auto mb-4">
+                            <i class="bi bi-mortarboard-fill"></i>
+                        </div>
+                        <h4 class="card-title mb-3">Educational Resources</h4>
+                        <p class="card-text">Access courses, webinars, and workshops focused on integrating renewable energy technologies with agricultural practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Showcase -->
+<section class="py-5 bg-white">
+    <div class="container py-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6">
+                <h2 class="display-5 fw-bold mb-4">From Farm to Market</h2>
+                <p class="lead mb-4">Discover a wide range of sustainable agricultural products from local South African farmers.</p>
+                <p class="mb-4">Our platform connects you directly with farmers practicing sustainable methods, ensuring quality, traceability, and environmental responsibility.</p>
+                <a href="@Url.Action("Login", "Auth")" class="btn btn-outline-success btn-lg">Browse Products</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3 mt-4 mt-lg-0">
+                    <div class="col-6">
+                        <img src="~/images/products/tomatoes.jpg" alt="Organic Tomatoes" class="img-fluid rounded-3 shadow">
+                    </div>
+                    <div class="col-6">
+                        <img src="~/images/products/eggs.jpg" alt="Free-Range Eggs" class="img-fluid rounded-3 shadow">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <img src="~/images/products/honey.jpg" alt="Organic Honey" class="img-fluid rounded-3 shadow">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <img src="~/images/products/spinach.jpg" alt="Organic Spinach" class="img-fluid rounded-3 shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-success">Success Stories</h2>
+            <p class="lead text-muted">Hear from farmers and energy experts who have benefited from our platform</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="testimonial-avatar bg-success text-white">JS</div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">John Smith</h5>
+                            <p class="text-muted mb-0">Organic Farmer, Western Cape</p>
+                        </div>
+                    </div>
+                    <p class="card-text mb-4">"Since implementing solar irrigation solutions found on Agri-Energy Connect, our farm has reduced water usage by 30% and energy costs by 40%. The platform made it easy to find the right technology for our needs."</p>
+                    <div class="text-warning mt-auto">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="testimonial-avatar bg-success text-white">TM</div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">Thabo Maphosa</h5>
+                            <p class="text-muted mb-0">Solar Energy Consultant</p>
+                        </div>
+                    </div>
+                    <p class="card-text mb-4">"As a green energy provider, this platform has connected us with farmers who are genuinely interested in sustainable solutions. The educational resources help clients understand the long-term benefits of renewable energy."</p>
+                    <div class="text-warning mt-auto">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="testimonial-avatar bg-success text-white">LN</div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">Lisa Naidoo</h5>
+                            <p class="text-muted mb-0">Dairy Farmer, KwaZulu-Natal</p>
+                        </div>
+                    </div>
+                    <p class="card-text mb-4">"The collaboration opportunities on Agri-Energy Connect helped us partner with other farmers to invest in a shared biogas facility. Now we're turning waste into energy and creating additional revenue streams."</p>
+                    <div class="text-warning mt-auto">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section position-relative text-white py-5">
+    <div class="cta-overlay"></div>
+    <div class="container position-relative py-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="display-4 fw-bold mb-4">Ready to Transform Agriculture?</h2>
+                <p class="lead mb-5">Join thousands of farmers and energy experts already collaborating on sustainable solutions.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="@Url.Action("Register", "Auth")" class="btn btn-light btn-lg px-4">
+                        <i class="bi bi-person-plus me-2"></i>Join Today
+                    </a>
+                    <a href="@Url.Action("Login", "Auth")" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

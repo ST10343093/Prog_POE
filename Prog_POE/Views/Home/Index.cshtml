@@ -1,15 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="container-fluid py-4">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="card bg-success text-white">
-                <div class="card-body">
+            <div class="card bg-success text-white shadow-lg">
+                <div class="card-body p-4">
                     <div class="row align-items-center">
                         <div class="col-md-8">
-                            <h1 class="display-4">Welcome to Agri-Energy Connect</h1>
+                            <h1 class="display-4 fw-bold">Welcome to Agri-Energy Connect</h1>
                             <p class="lead">Bridging the gap between sustainable agriculture and green energy solutions.</p>
                             <hr class="my-4 bg-white">
                             <p>Explore our platform to connect with farmers, discover green energy solutions, and participate in a sustainable future.</p>
@@ -25,30 +25,36 @@
 
     <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card h-100 shadow border-primary">
-                <div class="card-body text-center">
-                    <i class="bi bi-people-fill text-primary" style="font-size: 3rem;"></i>
-                    <h3 class="card-title mt-3">@ViewBag.FarmerCount</h3>
+            <div class="card h-100 shadow border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-people-fill text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h3 class="card-title mt-3 fw-bold">@ViewBag.FarmerCount</h3>
                     <h6 class="card-subtitle mb-2 text-muted">Registered Farmers</h6>
                     <p class="card-text">Connect with farmers who are committed to sustainable agricultural practices.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 shadow border-success">
-                <div class="card-body text-center">
-                    <i class="bi bi-basket-fill text-success" style="font-size: 3rem;"></i>
-                    <h3 class="card-title mt-3">@ViewBag.ProductCount</h3>
+            <div class="card h-100 shadow border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-basket-fill text-success" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h3 class="card-title mt-3 fw-bold">@ViewBag.ProductCount</h3>
                     <h6 class="card-subtitle mb-2 text-muted">Total Products</h6>
                     <p class="card-text">Browse through a variety of sustainable and locally produced agricultural products.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card h-100 shadow border-warning">
-                <div class="card-body text-center">
-                    <i class="bi bi-award-fill text-warning" style="font-size: 3rem;"></i>
-                    <h3 class="card-title mt-3">@ViewBag.OrganicProductCount</h3>
+            <div class="card h-100 shadow border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-award-fill text-warning" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h3 class="card-title mt-3 fw-bold">@ViewBag.OrganicProductCount</h3>
                     <h6 class="card-subtitle mb-2 text-muted">Organic Products</h6>
                     <p class="card-text">Discover certified organic products that prioritize environmental sustainability.</p>
                 </div>
@@ -58,29 +64,64 @@
 
     <div class="row mb-4">
         <div class="col-md-6">
-            <div class="card shadow h-100">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i>About Agri-Energy Connect</h5>
+            <div class="card shadow h-100 border-0">
+                <div class="card-header bg-primary text-white p-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle-fill me-2"></i>About Agri-Energy Connect</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <p>Agri-Energy Connect is a pioneering platform that bridges the gap between sustainable agriculture and green energy solutions. Our mission is to create a collaborative ecosystem where farmers, energy experts, and enthusiasts can share knowledge, resources, and innovations.</p>
                     <p>We believe that the future of agriculture lies in sustainable practices, and integrating green energy technologies is a crucial step towards this goal. By connecting these two sectors, we aim to foster a more sustainable and environmentally friendly approach to farming.</p>
+
+                    <div class="text-center mt-4">
+                        <img src="/images/sustainable-farm.jpg" alt="Sustainable Farm" class="img-fluid rounded-3 shadow" style="max-height: 200px;">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card shadow h-100">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0"><i class="bi bi-lightbulb-fill me-2"></i>Key Features</h5>
+            <div class="card shadow h-100 border-0">
+                <div class="card-header bg-success text-white p-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-lightbulb-fill me-2"></i>Key Features</h5>
                 </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Sustainable Farming Hub</li>
-                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Green Energy Marketplace</li>
-                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Educational Resources</li>
-                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Project Collaboration</li>
-                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Funding Opportunities</li>
-                    </ul>
+                <div class="card-body p-4">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item border-0 px-0 py-3 d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-shop text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Sustainable Farming Hub</h5>
+                                <p class="mb-0 text-muted">Access resources and best practices for sustainable farming techniques.</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item border-0 px-0 py-3 d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-lightning-charge text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Green Energy Marketplace</h5>
+                                <p class="mb-0 text-muted">Discover and compare green energy solutions for agricultural needs.</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item border-0 px-0 py-3 d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-book text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Educational Resources</h5>
+                                <p class="mb-0 text-muted">Access courses and workshops on integrating green energy with agriculture.</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item border-0 px-0 py-3 d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 rounded-circle p-3 me-3">
+                                <i class="bi bi-people text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Collaboration Platform</h5>
+                                <p class="mb-0 text-muted">Connect with like-minded individuals for joint sustainability projects.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -20,6 +20,13 @@ html {
 body {
     margin-bottom: 60px;
     background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
 }
 
 .footer {
@@ -34,25 +41,43 @@ body {
 .card {
     border-radius: 10px;
     transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
 }
 
     .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
 
 .card-header {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    font-weight: 600;
 }
 
 .btn {
     border-radius: 5px;
-    padding: 8px 20px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
+
+.btn-success {
+    background-color: #2e8b57;
+    border-color: #2e8b57;
+}
+
+    .btn-success:hover {
+        background-color: #267349;
+        border-color: #267349;
+    }
 
 .nav-link {
     font-weight: 500;
+    padding: 0.7rem 1rem;
+    transition: all 0.3s ease;
 }
 
 .navbar-brand {
@@ -63,6 +88,7 @@ body {
 .table {
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .badge {
@@ -106,8 +132,14 @@ body {
 .product-card {
     height: 100%;
     border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
 
     .product-card .card-img-top {
         height: 200px;
@@ -126,13 +158,82 @@ body {
     padding: 10px 15px;
 }
 
+.form-floating > .form-control {
+    padding: 1rem 0.75rem;
+}
+
+.form-floating > label {
+    padding: 1rem 0.75rem;
+}
+
 .form-label {
     font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: #2e8b57;
+    box-shadow: 0 0 0 0.25rem rgba(46, 139, 87, 0.15);
 }
 
 /* Login page */
 .login-card {
     max-width: 400px;
     margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* Display text improvements */
+.display-5 {
+    font-weight: 700;
+}
+
+/* Rounded elements */
+.rounded-lg {
+    border-radius: 0.75rem !important;
+}
+
+/* Shadows */
+.shadow-lg {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Transitions */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+    .dropdown-item:hover {
+        background-color: rgba(46, 139, 87, 0.1);
+    }
+
+/* Improved table styling */
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.table td, .table th {
+    padding: 1rem;
+}
+
+/* Add Google Fonts to the header */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');

@@ -1,0 +1,170 @@
+﻿/* Landing Page Specific Styles */
+
+/* Base styling */
+.landing-page {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+    .landing-page h1, .landing-page h2, .landing-page h3, .landing-page h4, .landing-page h5, .landing-page h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+
+/* Hero Section */
+.hero-section {
+    background: url('/images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay without green tint */
+    pointer-events: none;
+}
+
+/* Text styling for better visibility */
+.hero-section h1,
+.hero-section p,
+.hero-section a {
+    color: #ffffff; /* Bright white color */
+    position: relative; /* Ensures text stays above the overlay */
+    z-index: 2; /* Higher z-index than overlay */
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Button styling for better visibility */
+.hero-section .btn {
+    position: relative;
+    z-index: 2;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hero-section .btn-success {
+    background-color: #2e8b57;
+    border-color: #2e8b57;
+}
+
+    .hero-section .btn-success:hover {
+        background-color: #267349;
+        border-color: #267349;
+    }
+
+.hero-section .btn-outline-light {
+    border-width: 2px;
+}
+
+    .hero-section .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+/* Navbar Styling */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #fff;
+    }
+
+.navbar-scrolled {
+    background-color: rgba(0, 100, 0, 0.95) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Feature Icons */
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.hover-card {
+    transition: all 0.3s ease;
+}
+
+    .hover-card:hover {
+        transform: translateY(-10px);
+    }
+
+/* CTA Section */
+.cta-section {
+    background: url('/images/cta-bg.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+.cta-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 100, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+/* Testimonials */
+.testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: #1a1a1a;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    .footer-link:hover {
+        color: #fff;
+    }
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+    .social-icon:hover {
+        color: #fff;
+    }
