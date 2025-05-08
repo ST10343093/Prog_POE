@@ -2,6 +2,7 @@
 using Prog_POE.Data;
 using Prog_POE.Models;
 using Microsoft.EntityFrameworkCore;
+using Prog_POE.Helpers;
 
 namespace Prog_POE.Controllers
 {
@@ -33,12 +34,42 @@ namespace Prog_POE.Controllers
                 return View();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            // Get user by username only (we'll verify password separately)
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
             {
                 ViewBag.Error = "Invalid username or password.";
                 return View();
+            }
+
+            // Debug info
+            System.Diagnostics.Debug.WriteLine($"Username: {username}");
+            System.Diagnostics.Debug.WriteLine($"Stored password: {user.Password}");
+            System.Diagnostics.Debug.WriteLine($"Contains colon: {user.Password.Contains(':')}");
+
+            // Check if we need to handle legacy passwords (not hashed)
+            if (!user.Password.Contains(':'))
+            {
+                // Legacy password - direct comparison
+                if (user.Password != password)
+                {
+                    ViewBag.Error = "Invalid username or password.";
+                    return View();
+                }
+
+                // Update the user's password to a hashed version
+                user.Password = PasswordHelper.HashPassword(password);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Hashed password - verify using the hashing function
+                if (!PasswordHelper.VerifyPassword(user.Password, password))
+                {
+                    ViewBag.Error = "Invalid username or password.";
+                    return View();
+                }
             }
 
             // Store user info in session
@@ -84,6 +115,9 @@ namespace Prog_POE.Controllers
 
             if (ModelState.IsValid)
             {
+                // Hash the password before storing it
+                user.Password = PasswordHelper.HashPassword(user.Password);
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 

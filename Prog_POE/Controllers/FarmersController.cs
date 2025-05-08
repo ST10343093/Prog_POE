@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Prog_POE.Data;
 using Prog_POE.Models;
+using Prog_POE.Helpers;
 
 namespace Prog_POE.Controllers
 {
@@ -89,6 +90,9 @@ namespace Prog_POE.Controllers
             {
                 try
                 {
+                    // Hash the password before storing
+                    farmer.Password = PasswordHelper.HashPassword(farmer.Password);
+
                     _context.Add(farmer);
                     await _context.SaveChangesAsync();
                     TempData["SuccessMessage"] = "Farmer added successfully!";
@@ -250,7 +254,8 @@ namespace Prog_POE.Controllers
                     // Only update password if a new one is provided
                     if (!string.IsNullOrEmpty(NewPassword))
                     {
-                        existingFarmer.Password = NewPassword;
+                        // Hash the new password
+                        existingFarmer.Password = PasswordHelper.HashPassword(NewPassword);
                     }
 
                     // Save changes to database
