@@ -60,8 +60,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/agri-energy-connect.git
-cd agri-energy-connect
+git clone https://github.com/ST10343093/Prog_POE
+cd Prog_POE
 ```
 
 ### 2. Database Configuration
@@ -72,7 +72,7 @@ cd agri-energy-connect
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=AgriEnergyConnectDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+  "DefaultConnection": "Server=lab7L95SR\\SQLEXPRESS;Database=AgriEnergyConnectDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
 }
 ```
 
