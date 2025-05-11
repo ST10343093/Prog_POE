@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Add New Farmer";
 
-    // Get form data from TempData if available
+    // Get form data from TempData if available for repopulating form after validation errors
     var formData = TempData["FormData"] as dynamic;
 }
 
 <div class="container-fluid py-4">
+    <!-- Page header -->
     <div class="row mb-4">
         <div class="col-12">
             <h1 class="display-5"><i class="bi bi-person-plus-fill text-success me-3"></i>Add New Farmer</h1>
@@ -15,6 +16,7 @@
         </div>
     </div>
 
+    <!-- Error summary display -->
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="row mb-4">
@@ -38,14 +40,16 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card shadow">
+                <!-- Card header -->
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Farmer Details</h5>
                 </div>
                 <div class="card-body p-4">
                     <form asp-action="Create" id="createFarmerForm">
-                        <!-- Add hidden field for Role -->
+                        <!-- Hidden field to set role -->
                         <input type="hidden" asp-for="Role" value="Farmer" />
 
+                        <!-- Personal information section -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -63,6 +67,7 @@
                             </div>
                         </div>
 
+                        <!-- Account credentials section -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -80,12 +85,14 @@
                             </div>
                         </div>
 
+                        <!-- Email field -->
                         <div class="form-floating mb-3">
                             <input asp-for="Email" class="form-control" id="Email" type="email" placeholder="Enter email address" required value="@(formData?.Email ?? "")" />
                             <label asp-for="Email" class="form-label">Email Address</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
+                        <!-- Farm information section -->
                         <hr class="my-4" />
                         <h5 class="mb-3">Farm Information</h5>
 
@@ -107,6 +114,7 @@
                             <span asp-validation-for="FarmDescription" class="text-danger"></span>
                         </div>
 
+                        <!-- Form buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a asp-action="Index" class="btn btn-secondary me-md-2">
                                 <i class="bi bi-x-circle me-2"></i>Cancel
@@ -122,6 +130,7 @@
     </div>
 </div>
 
+<!-- Include client-side validation scripts -->
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

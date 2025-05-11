@@ -6,22 +6,26 @@ using Prog_POE.Models;
 
 namespace Prog_POE.Controllers
 {
+    // Controller for managing product-related operations
+    // Inherits from BaseController for authentication requirements
     public class ProductsController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor with database context injection
         public ProductsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Products
+        // Displays all products with optional filtering capabilities
         public async Task<IActionResult> Index(string category = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            // Start with all products
+            // Start with all products and include related farmer details
             var query = _context.Products.Include(p => p.Farmer).AsQueryable();
 
-            // Apply filters if provided
+            // Apply filters if provided to narrow down results
             if (!string.IsNullOrEmpty(category))
             {
                 query = query.Where(p => p.Category == category);
@@ -37,23 +41,26 @@ namespace Prog_POE.Controllers
                 query = query.Where(p => p.ProductionDate <= endDate.Value);
             }
 
-            // Get distinct categories for the filter dropdown
+            // Prepare filter dropdown options with unique categories
             var categories = await _context.Products
                 .Select(p => p.Category)
                 .Distinct()
                 .ToListAsync();
 
+            // Pass filter values to view for maintaining state
             ViewBag.Categories = new SelectList(categories);
             ViewBag.SelectedCategory = category;
             ViewBag.StartDate = startDate;
             ViewBag.EndDate = endDate;
 
+            // Execute query and return results
             var products = await query.ToListAsync();
 
             return View(products);
         }
 
         // GET: Products/FarmerProducts/5
+        // Shows products from a specific farmer with filtering options
         public async Task<IActionResult> FarmerProducts(int? id, string category = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (id == null)
@@ -61,6 +68,7 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
+            // Verify the farmer exists and is actually a farmer
             var farmer = await _context.Users
                 .FirstOrDefaultAsync(f => f.UserId == id && f.Role == "Farmer");
 
@@ -69,13 +77,14 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
+            // Pass farmer info to view for display
             ViewBag.Farmer = farmer;
 
-            // Get all products from this farmer
+            // Start with all products from this specific farmer
             var query = _context.Products
                 .Where(p => p.FarmerId == id);
 
-            // Apply filters if provided
+            // Apply additional filters if provided
             if (!string.IsNullOrEmpty(category))
             {
                 query = query.Where(p => p.Category == category);
@@ -91,34 +100,39 @@ namespace Prog_POE.Controllers
                 query = query.Where(p => p.ProductionDate <= endDate.Value);
             }
 
-            // Get distinct categories for the filter dropdown
+            // Get categories specific to this farmer's products for the filter
             var categories = await _context.Products
                 .Where(p => p.FarmerId == id)
                 .Select(p => p.Category)
                 .Distinct()
                 .ToListAsync();
 
+            // Pass filter values to view
             ViewBag.Categories = new SelectList(categories);
             ViewBag.SelectedCategory = category;
             ViewBag.StartDate = startDate;
             ViewBag.EndDate = endDate;
 
+            // Execute query and return results
             var products = await query.ToListAsync();
 
             return View(products);
         }
 
-        // GET: Products/MyProducts - For farmers to see their own products
+        // GET: Products/MyProducts
+        // For farmers to view and manage their own products
         public async Task<IActionResult> MyProducts()
         {
-            // Check if user is a farmer
+            // Role-based authorization check - only farmers can access this
             if (HttpContext.Session.GetString("Role") != "Farmer")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Get the current user's ID from session
             int farmerId = int.Parse(HttpContext.Session.GetString("UserId"));
 
+            // Retrieve all products belonging to this farmer
             var products = await _context.Products
                 .Where(p => p.FarmerId == farmerId)
                 .ToListAsync();
@@ -126,10 +140,11 @@ namespace Prog_POE.Controllers
             return View(products);
         }
 
-        // GET: Products/Create - For farmers to add new products
+        // GET: Products/Create
+        // Displays form for farmers to add new products
         public IActionResult Create()
         {
-            // Check if user is a farmer
+            // Role-based authorization check - only farmers can add products
             if (HttpContext.Session.GetString("Role") != "Farmer")
             {
                 return RedirectToAction("Index", "Home");
@@ -139,54 +154,57 @@ namespace Prog_POE.Controllers
         }
 
         // POST: Products/Create
+        // Processes form submission to add a new product
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
             try
             {
-                // Check if user is a farmer
+                // Role-based authorization check - only farmers can add products
                 if (HttpContext.Session.GetString("Role") != "Farmer")
                 {
                     return RedirectToAction("Index", "Home");
                 }
 
-                // Set farmer ID from session
+                // Associate product with the current farmer
                 product.FarmerId = int.Parse(HttpContext.Session.GetString("UserId"));
 
-                // Handle image URL
+                // Process and standardize image URL format
                 if (!string.IsNullOrEmpty(product.ImageUrl))
                 {
-                    // Check if it's an internet URL (starts with http:// or https://)
+                    // External URL handling - keep as is if it's a web URL
                     if (!product.ImageUrl.StartsWith("http://") && !product.ImageUrl.StartsWith("https://"))
                     {
-                        // It's a local file - ensure it has the correct format
+                        // Local file path handling - normalize path format
                         product.ImageUrl = product.ImageUrl.Replace("\\", "/").TrimStart('/');
                         product.ImageUrl = "/images/products/" + product.ImageUrl;
                     }
                 }
 
-                // Add the product to the database
+                // Save the new product to database
                 _context.Add(product);
                 await _context.SaveChangesAsync();
 
+                // Success feedback and redirect
                 TempData["SuccessMessage"] = "Product added successfully!";
                 return RedirectToAction(nameof(MyProducts));
             }
             catch (Exception ex)
             {
-                // Add detailed error message
+                // Error handling with detailed feedback
                 ModelState.AddModelError("", $"Error creating product: {ex.Message}");
 
-                // Log the error (you can replace this with proper logging)
+                // Diagnostic logging for troubleshooting
                 System.Diagnostics.Debug.WriteLine($"Error in ProductsController.Create: {ex}");
             }
 
-            // If we get here, something failed - redisplay the form
+            // If an error occurred, redisplay the form with validation messages
             return View(product);
         }
 
         // GET: Products/Details/5
+        // Displays detailed information about a specific product
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -194,6 +212,7 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
+            // Retrieve product with related farmer information
             var product = await _context.Products
                 .Include(p => p.Farmer)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
@@ -207,6 +226,7 @@ namespace Prog_POE.Controllers
         }
 
         // GET: Products/Delete/5
+        // Displays confirmation page before deleting a product
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -214,6 +234,7 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
+            // Get product with farmer details for display
             var product = await _context.Products
                 .Include(p => p.Farmer)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
@@ -223,7 +244,7 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
-            // Check if the current user is the owner of this product or an employee
+            // Security check - ensure only the product owner or admin can delete
             if (HttpContext.Session.GetString("Role") == "Farmer" &&
                 int.Parse(HttpContext.Session.GetString("UserId")) != product.FarmerId)
             {
@@ -234,12 +255,14 @@ namespace Prog_POE.Controllers
         }
 
         // POST: Products/Delete/5
+        // Processes the product deletion after confirmation
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
+                // Find the product to delete
                 var product = await _context.Products.FindAsync(id);
 
                 if (product == null)
@@ -247,24 +270,27 @@ namespace Prog_POE.Controllers
                     return NotFound();
                 }
 
-                // Check if the current user is the owner of this product or an employee
+                // Security check - ensure only the product owner or admin can delete
                 if (HttpContext.Session.GetString("Role") == "Farmer" &&
                     int.Parse(HttpContext.Session.GetString("UserId")) != product.FarmerId)
                 {
                     return Forbid();
                 }
 
+                // Remove the product from database
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
 
+                // Success feedback
                 TempData["SuccessMessage"] = "Product deleted successfully!";
             }
             catch (Exception ex)
             {
+                // Error handling with feedback
                 TempData["ErrorMessage"] = $"Error deleting product: {ex.Message}";
             }
 
-            // Redirect back to the appropriate product list
+            // Redirect based on user role - farmers go to their products, others to all products
             if (HttpContext.Session.GetString("Role") == "Farmer")
             {
                 return RedirectToAction(nameof(MyProducts));

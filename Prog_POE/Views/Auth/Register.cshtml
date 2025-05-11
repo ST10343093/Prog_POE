@@ -1,6 +1,7 @@
 ﻿@model Prog_POE.Models.User
 
 @{
+    // Define the page title and layout template
     ViewData["Title"] = "Register";
     Layout = "_Layout";
 }
@@ -13,14 +14,18 @@
                     <div class="row g-0">
                         <div class="col-12">
                             <div class="p-5">
+                                <!-- Registration form header -->
                                 <div class="text-center mb-4">
                                     <h3 class="fw-bold text-success mb-2">Create Your Account</h3>
                                     <p class="text-muted">Join the Agri-Energy Connect community</p>
                                 </div>
 
+                                <!-- Registration form with model binding -->
                                 <form asp-action="Register" method="post">
+                                    <!-- Validation summary for model-level errors -->
                                     <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
+                                    <!-- Personal information section -->
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-6">
                                             <label asp-for="FirstName" class="form-label">First Name</label>
@@ -34,6 +39,7 @@
                                         </div>
                                     </div>
 
+                                    <!-- Email field with icon -->
                                     <div class="mb-3">
                                         <label asp-for="Email" class="form-label">Email Address</label>
                                         <div class="input-group">
@@ -45,6 +51,7 @@
                                         <span asp-validation-for="Email" class="text-danger small"></span>
                                     </div>
 
+                                    <!-- Account credentials section -->
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-6">
                                             <label asp-for="Username" class="form-label">Username</label>
@@ -68,11 +75,13 @@
                                         </div>
                                     </div>
 
+                                    <!-- Farm information section header -->
                                     <div class="alert alert-light border-start border-4 border-success mb-4">
                                         <h6 class="fw-bold"><i class="bi bi-info-circle-fill me-2 text-success"></i>Farm Information</h6>
                                         <p class="small mb-0">As a farmer, please provide details about your farm.</p>
                                     </div>
 
+                                    <!-- Farm details fields -->
                                     <div class="mb-3">
                                         <label asp-for="FarmName" class="form-label">Farm Name</label>
                                         <input asp-for="FarmName" class="form-control" placeholder="Enter your farm name" />
@@ -91,6 +100,7 @@
                                         <span asp-validation-for="FarmDescription" class="text-danger small"></span>
                                     </div>
 
+                                    <!-- Form submission buttons -->
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn btn-success btn-lg">Create Account</button>
                                         <a asp-action="Login" class="btn btn-outline-secondary">Already have an account? Sign in</a>
@@ -105,6 +115,7 @@
     </div>
 </div>
 
+<!-- Include client-side validation scripts -->
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -5,6 +5,7 @@
 }
 
 <div class="container-fluid py-4">
+    <!-- Page header -->
     <div class="row mb-4">
         <div class="col-12">
             <h1 class="display-5"><i class="bi bi-person-gear text-success me-3"></i>Edit Your Profile</h1>
@@ -12,6 +13,7 @@
         </div>
     </div>
 
+    <!-- Success message notification -->
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,6 +22,7 @@
         </div>
     }
 
+    <!-- Error message notification -->
     @if (TempData["ErrorMessage"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -31,10 +34,12 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card shadow">
+                <!-- Card header -->
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Profile Information</h5>
                 </div>
 
+                <!-- Validation errors summary -->
                 @if (!ViewData.ModelState.IsValid)
                 {
                     <div class="alert alert-danger m-3">
@@ -52,20 +57,16 @@
                 }
 
                 <div class="card-body p-4">
-                    <!-- Debug information -->
-                    <div class="alert alert-info mb-3">
-                        <p><strong>Debug Info:</strong> Submitting to: @Url.Action("Edit", "Farmers")</p>
-                        <p><strong>User ID:</strong> @Model.UserId</p>
-                        <p><strong>Role:</strong> @Model.Role</p>
-                    </div>
-
+                    <!-- Profile edit form -->
                     <form asp-action="Edit" method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
+                        <!-- Hidden fields to preserve data -->
                         <input type="hidden" asp-for="UserId" />
                         <input type="hidden" asp-for="Role" />
                         <input type="hidden" asp-for="Password" />
 
+                        <!-- Personal information section -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -83,6 +84,7 @@
                             </div>
                         </div>
 
+                        <!-- Account credentials section -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -100,12 +102,14 @@
                             </div>
                         </div>
 
+                        <!-- Email field -->
                         <div class="form-floating mb-3">
                             <input asp-for="Email" class="form-control" id="Email" type="email" placeholder="Enter email address" required />
                             <label asp-for="Email" class="form-label">Email Address</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
+                        <!-- Farm information section -->
                         <hr class="my-4" />
                         <h5 class="mb-3">Farm Information</h5>
 
@@ -127,6 +131,7 @@
                             <span asp-validation-for="FarmDescription" class="text-danger"></span>
                         </div>
 
+                        <!-- Form buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a asp-action="Profile" class="btn btn-secondary me-md-2">
                                 <i class="bi bi-x-circle me-2"></i>Cancel
@@ -142,6 +147,7 @@
     </div>
 </div>
 
+<!-- Include client-side validation scripts -->
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

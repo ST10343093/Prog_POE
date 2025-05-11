@@ -6,24 +6,29 @@ using Prog_POE.Helpers;
 
 namespace Prog_POE.Controllers
 {
+    // Controller for managing farmer profiles and information
+    // Inherits from BaseController for authentication requirements
     public class FarmersController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor with database context injection for database operations
         public FarmersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Farmers - List all farmers (Employee only)
+        // Displays a list of all registered farmers in the system
         public async Task<IActionResult> Index()
         {
-            // Check if the user is an employee
+            // Role-based authorization check - only employees can access this page
             if (HttpContext.Session.GetString("Role") != "Employee")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Retrieve all users with Farmer role from the database
             var farmers = await _context.Users
                 .Where(u => u.Role == "Farmer")
                 .ToListAsync();
@@ -32,9 +37,10 @@ namespace Prog_POE.Controllers
         }
 
         // GET: Farmers/Create - Form to create a new farmer (Employee only)
+        // Displays the form for employees to add new farmer accounts
         public IActionResult Create()
         {
-            // Check if the user is an employee
+            // Role-based authorization check - only employees can create farmers
             if (HttpContext.Session.GetString("Role") != "Employee")
             {
                 return RedirectToAction("Index", "Home");
@@ -44,20 +50,21 @@ namespace Prog_POE.Controllers
         }
 
         // POST: Farmers/Create - Create a new farmer (Employee only)
+        // Processes the form submission to add a new farmer to the system
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User farmer)
         {
-            // Check if the user is an employee
+            // Role-based authorization check - only employees can create farmers
             if (HttpContext.Session.GetString("Role") != "Employee")
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            // Set role to Farmer
+            // Set role to Farmer for the new user
             farmer.Role = "Farmer";
 
-            // Perform manual validation for required fields
+            // Perform manual validation for required fields to ensure data integrity
             if (string.IsNullOrEmpty(farmer.FirstName))
                 ModelState.AddModelError("FirstName", "First Name is required");
 
@@ -79,7 +86,7 @@ namespace Prog_POE.Controllers
             if (string.IsNullOrEmpty(farmer.FarmLocation))
                 ModelState.AddModelError("FarmLocation", "Farm Location is required");
 
-            // Check if username already exists
+            // Check for username uniqueness to prevent duplicate accounts
             if (await _context.Users.AnyAsync(u => u.Username == farmer.Username))
             {
                 ModelState.AddModelError("Username", "This username is already taken.");
@@ -90,9 +97,10 @@ namespace Prog_POE.Controllers
             {
                 try
                 {
-                    // Hash the password before storing
+                    // Security: Hash the password before storing in database
                     farmer.Password = PasswordHelper.HashPassword(farmer.Password);
 
+                    // Add and save the new farmer to the database
                     _context.Add(farmer);
                     await _context.SaveChangesAsync();
                     TempData["SuccessMessage"] = "Farmer added successfully!";
@@ -100,12 +108,12 @@ namespace Prog_POE.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log the exception
+                    // Error handling for database operations
                     ModelState.AddModelError("", "An error occurred while creating the farmer. Please try again.");
                 }
             }
 
-            // Store non-sensitive form data in TempData to be displayed in the form
+            // Store non-sensitive form data in TempData to preserve values if validation fails
             TempData["FormData"] = new
             {
                 farmer.FirstName,
@@ -117,11 +125,12 @@ namespace Prog_POE.Controllers
                 farmer.FarmDescription
             };
 
-            // If we get here, something failed, show error summary
+            // If we get here, validation failed or an error occurred
             return View(farmer);
         }
 
         // GET: Farmers/Details/5 - View farmer details and products
+        // Displays detailed information about a specific farmer and their products
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -129,6 +138,7 @@ namespace Prog_POE.Controllers
                 return NotFound();
             }
 
+            // Retrieve farmer with their products using eager loading
             var farmer = await _context.Users
                 .Include(f => f.Products)
                 .FirstOrDefaultAsync(m => m.UserId == id && m.Role == "Farmer");
@@ -142,16 +152,19 @@ namespace Prog_POE.Controllers
         }
 
         // GET: Farmers/Profile - For farmers to view their own profile
+        // Allows farmers to see their current profile information
         public async Task<IActionResult> Profile()
         {
-            // Check if user is a farmer
+            // Role-based authorization check - only farmers can see their profile
             if (HttpContext.Session.GetString("Role") != "Farmer")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Get the current farmer's ID from session
             int farmerId = int.Parse(HttpContext.Session.GetString("UserId"));
 
+            // Retrieve the farmer's profile information
             var farmer = await _context.Users
                 .FirstOrDefaultAsync(u => u.UserId == farmerId);
 
@@ -164,16 +177,19 @@ namespace Prog_POE.Controllers
         }
 
         // GET: Farmers/Edit
+        // Displays form for farmers to edit their own profile information
         public async Task<IActionResult> Edit()
         {
-            // Check if user is a farmer
+            // Role-based authorization check - only farmers can edit their profile
             if (HttpContext.Session.GetString("Role") != "Farmer")
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            // Get the current farmer's ID from session
             int farmerId = int.Parse(HttpContext.Session.GetString("UserId"));
 
+            // Retrieve the farmer's current information for editing
             var farmer = await _context.Users
                 .FirstOrDefaultAsync(u => u.UserId == farmerId);
 
@@ -186,20 +202,21 @@ namespace Prog_POE.Controllers
         }
 
         // POST: Farmers/Edit
+        // Processes the form submission to update a farmer's profile
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(User farmer, string? NewPassword)
         {
             try
             {
-                // Check if user is a farmer
+                // Role-based authorization check - only farmers can edit their profile
                 if (HttpContext.Session.GetString("Role") != "Farmer")
                 {
                     TempData["ErrorMessage"] = "Only farmers can edit their profiles.";
                     return RedirectToAction("Index", "Home");
                 }
 
-                // Ensure we're editing the correct user (security check)
+                // Security check to ensure users can only edit their own profile
                 int farmerId = int.Parse(HttpContext.Session.GetString("UserId"));
                 if (farmer.UserId != farmerId)
                 {
@@ -207,7 +224,7 @@ namespace Prog_POE.Controllers
                     return Forbid();
                 }
 
-                // Get the existing farmer record
+                // Retrieve the existing farmer record from database
                 var existingFarmer = await _context.Users
                     .FirstOrDefaultAsync(u => u.UserId == farmerId);
 
@@ -217,7 +234,7 @@ namespace Prog_POE.Controllers
                     return NotFound();
                 }
 
-                // Validate required fields
+                // Validate required fields to ensure data integrity
                 if (string.IsNullOrEmpty(farmer.FirstName))
                     ModelState.AddModelError("FirstName", "First Name is required");
 
@@ -233,7 +250,7 @@ namespace Prog_POE.Controllers
                 if (string.IsNullOrEmpty(farmer.FarmLocation))
                     ModelState.AddModelError("FarmLocation", "Farm Location is required");
 
-                // Check if another user already has this username (if username was changed)
+                // Check for username conflicts if it was changed
                 if (farmer.Username != existingFarmer.Username &&
                     await _context.Users.AnyAsync(u => u.Username == farmer.Username))
                 {
@@ -242,7 +259,7 @@ namespace Prog_POE.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    // Update the properties
+                    // Update the existing farmer's properties with new values
                     existingFarmer.FirstName = farmer.FirstName;
                     existingFarmer.LastName = farmer.LastName;
                     existingFarmer.Username = farmer.Username;
@@ -251,10 +268,10 @@ namespace Prog_POE.Controllers
                     existingFarmer.FarmLocation = farmer.FarmLocation;
                     existingFarmer.FarmDescription = farmer.FarmDescription;
 
-                    // Only update password if a new one is provided
+                    // Update password only if a new one is provided
                     if (!string.IsNullOrEmpty(NewPassword))
                     {
-                        // Hash the new password
+                        // Security: Hash the new password before storing
                         existingFarmer.Password = PasswordHelper.HashPassword(NewPassword);
                     }
 
@@ -262,7 +279,7 @@ namespace Prog_POE.Controllers
                     _context.Update(existingFarmer);
                     await _context.SaveChangesAsync();
 
-                    // Update session data
+                    // Update session data to reflect the changes
                     HttpContext.Session.SetString("Username", existingFarmer.Username);
                     HttpContext.Session.SetString("FullName", $"{existingFarmer.FirstName} {existingFarmer.LastName}");
 
@@ -277,7 +294,7 @@ namespace Prog_POE.Controllers
             }
             catch (Exception ex)
             {
-                // Add error message to TempData for display
+                // Error handling with informative message
                 TempData["ErrorMessage"] = $"An error occurred while updating your profile: {ex.Message}";
                 return View(farmer);
             }

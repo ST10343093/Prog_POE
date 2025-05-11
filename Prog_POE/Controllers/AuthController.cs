@@ -6,15 +6,18 @@ using Prog_POE.Helpers;
 
 namespace Prog_POE.Controllers
 {
+    // Controls all authentication-related operations including login, logout, and registration
     public class AuthController : Controller
     {
         private readonly ApplicationDbContext _context;
 
+        // Constructor that injects the database context dependency
         public AuthController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // Displays the login page if user is not already authenticated
         public IActionResult Login()
         {
             // Check if user is already logged in
@@ -25,9 +28,12 @@ namespace Prog_POE.Controllers
             return View();
         }
 
+        // Processes the login form submission with username and password validation
+        // Supports both legacy plain text passwords and new hashed passwords
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
+            // Validate that required fields are provided
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 ViewBag.Error = "Username and password are required.";
@@ -43,12 +49,12 @@ namespace Prog_POE.Controllers
                 return View();
             }
 
-            // Debug info
+            // Debug information for troubleshooting authentication issues
             System.Diagnostics.Debug.WriteLine($"Username: {username}");
             System.Diagnostics.Debug.WriteLine($"Stored password: {user.Password}");
             System.Diagnostics.Debug.WriteLine($"Contains colon: {user.Password.Contains(':')}");
 
-            // Check if we need to handle legacy passwords (not hashed)
+            // Password migration logic: handle both old plain text and new hashed passwords
             if (!user.Password.Contains(':'))
             {
                 // Legacy password - direct comparison
@@ -58,13 +64,13 @@ namespace Prog_POE.Controllers
                     return View();
                 }
 
-                // Update the user's password to a hashed version
+                // Upgrade security: Update the user's password to a hashed version
                 user.Password = PasswordHelper.HashPassword(password);
                 await _context.SaveChangesAsync();
             }
             else
             {
-                // Hashed password - verify using the hashing function
+                // Hashed password - verify using the secure hashing function
                 if (!PasswordHelper.VerifyPassword(user.Password, password))
                 {
                     ViewBag.Error = "Invalid username or password.";
@@ -72,7 +78,7 @@ namespace Prog_POE.Controllers
                 }
             }
 
-            // Store user info in session
+            // Store essential user information in session for authentication and personalization
             HttpContext.Session.SetString("UserId", user.UserId.ToString());
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("Role", user.Role);
@@ -81,16 +87,17 @@ namespace Prog_POE.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // Logs the current user out by clearing all session data
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
 
-        // GET: Auth/Register
+        // Displays the registration form for new users
         public IActionResult Register()
         {
-            // Check if user is already logged in
+            // Prevent authenticated users from accessing registration
             if (HttpContext.Session.GetString("UserId") != null)
             {
                 return RedirectToAction("Index", "Home");
@@ -98,12 +105,13 @@ namespace Prog_POE.Controllers
             return View();
         }
 
-        // POST: Auth/Register
+        // Processes the user registration form submission
+        // Creates new user accounts with proper password hashing
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(User user)
         {
-            // Check if username already exists
+            // Ensure username uniqueness
             if (await _context.Users.AnyAsync(u => u.Username == user.Username))
             {
                 ModelState.AddModelError("Username", "This username is already taken.");
@@ -115,13 +123,14 @@ namespace Prog_POE.Controllers
 
             if (ModelState.IsValid)
             {
-                // Hash the password before storing it
+                // Security: Hash the password before storing it in the database
                 user.Password = PasswordHelper.HashPassword(user.Password);
 
+                // Save the new user to the database
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 
-                // Log the user in automatically
+                // Automatically log in the newly registered user
                 HttpContext.Session.SetString("UserId", user.UserId.ToString());
                 HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetString("Role", user.Role);
@@ -130,6 +139,8 @@ namespace Prog_POE.Controllers
                 TempData["SuccessMessage"] = "Registration successful! Welcome to Agri-Energy Connect.";
                 return RedirectToAction("Index", "Home");
             }
+
+            // Return to form with validation errors if model state is invalid
             return View(user);
         }
     }

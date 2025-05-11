@@ -3,7 +3,7 @@
     Layout = "_LandingLayout";
 }
 
-<!-- Hero Section -->
+<!-- Hero Section - main banner with call-to-action buttons -->
 <section class="hero-section position-relative">
     <div class="hero-overlay"></div>
     <div class="container h-100">
@@ -15,8 +15,8 @@
                     <a href="@Url.Action("Login", "Auth")" class="btn btn-success btn-lg px-4 py-3">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
                     </a>
-                    <a href="@Url.Action("Register", "Auth")" class="btn btn-outline-light btn-lg px-4 py-3">
-                        <i class="bi bi-person-plus me-2"></i>Register
+                    <a href="#" class="btn btn-outline-light btn-lg px-4 py-3" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="bi bi-info-circle me-2"></i>Get Access
                     </a>
                 </div>
             </div>
@@ -24,7 +24,7 @@
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- Features Section - highlights platform benefits -->
 <section class="py-5 bg-light">
     <div class="container py-5">
         <div class="text-center mb-5">
@@ -32,6 +32,7 @@
             <p class="lead text-muted">Our platform offers unique features designed for sustainable agriculture and green energy integration</p>
         </div>
         <div class="row g-4">
+            <!-- Feature 1: Sustainable Farming Hub -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-card">
                     <div class="card-body text-center p-4">
@@ -43,6 +44,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Feature 2: Green Energy Marketplace -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-card">
                     <div class="card-body text-center p-4">
@@ -54,6 +56,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Feature 3: Educational Resources -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm hover-card">
                     <div class="card-body text-center p-4">
@@ -69,7 +72,7 @@
     </div>
 </section>
 
-<!-- Products Showcase -->
+<!-- Products Showcase - displays sample products -->
 <section class="py-5 bg-white">
     <div class="container py-5">
         <div class="row align-items-center mb-5">
@@ -80,6 +83,7 @@
                 <a href="@Url.Action("Login", "Auth")" class="btn btn-outline-success btn-lg">Browse Products</a>
             </div>
             <div class="col-lg-6">
+                <!-- Product image grid -->
                 <div class="row g-3 mt-4 mt-lg-0">
                     <div class="col-6">
                         <img src="~/images/products/tomatoes.jpg" alt="Organic Tomatoes" class="img-fluid rounded-3 shadow">
@@ -99,7 +103,7 @@
     </div>
 </section>
 
-<!-- Testimonials Section -->
+<!-- Testimonials Section - success stories from users -->
 <section class="py-5 bg-light">
     <div class="container py-5">
         <div class="text-center mb-5">
@@ -107,6 +111,7 @@
             <p class="lead text-muted">Hear from farmers and energy experts who have benefited from our platform</p>
         </div>
         <div class="row">
+            <!-- Testimonial 1 -->
             <div class="col-lg-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm p-4">
                     <div class="d-flex align-items-center mb-4">
@@ -126,6 +131,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Testimonial 2 -->
             <div class="col-lg-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm p-4">
                     <div class="d-flex align-items-center mb-4">
@@ -145,6 +151,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Testimonial 3 -->
             <div class="col-lg-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm p-4">
                     <div class="d-flex align-items-center mb-4">
@@ -168,7 +175,7 @@
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- CTA Section - final call to action -->
 <section class="cta-section position-relative text-white py-5">
     <div class="cta-overlay"></div>
     <div class="container position-relative py-5">
@@ -177,8 +184,8 @@
                 <h2 class="display-4 fw-bold mb-4">Ready to Transform Agriculture?</h2>
                 <p class="lead mb-5">Join thousands of farmers and energy experts already collaborating on sustainable solutions.</p>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="@Url.Action("Register", "Auth")" class="btn btn-light btn-lg px-4">
-                        <i class="bi bi-person-plus me-2"></i>Join Today
+                    <a href="#" class="btn btn-light btn-lg px-4" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="bi bi-envelope me-2"></i>Contact Us
                     </a>
                     <a href="@Url.Action("Login", "Auth")" class="btn btn-outline-light btn-lg px-4">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
@@ -188,3 +195,27 @@
         </div>
     </div>
 </section>
+
+<!-- Contact Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="contactModalLabel"><i class="bi bi-envelope-fill me-2"></i>Get Access to Agri-Energy Connect</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>To register for an account on our platform, please contact one of our employees who will create an account for you.</p>
+                <p>You can reach our team at:</p>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-envelope-fill me-2 text-success"></i>contact@agrienergy.co.za</li>
+                    <li><i class="bi bi-telephone-fill me-2 text-success"></i>+27 (0)21 456 7890</li>
+                </ul>
+                <p class="mt-3 text-muted small">Our team will respond within 24-48 hours with your account details.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

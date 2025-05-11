@@ -5,21 +5,29 @@ using System.Reflection.Emit;
 
 namespace Prog_POE.Data
 {
+    // Database context class that serves as the main entry point for database interactions
+    // Manages entity sets and defines the relationship between entity classes and database tables
     public class ApplicationDbContext : DbContext
     {
+        // Constructor that accepts database configuration options from dependency injection
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
+        // DbSet properties representing database tables
+        // Each DbSet allows CRUD operations on the corresponding entities
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        // Method that configures the database model and relationships
+        // Called when the model is being created during startup
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed data for users (employees and farmers)
+            // Seed data for users - provides initial employee and farmer accounts
+            // This ensures the application has data to work with from the first run
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
@@ -59,7 +67,8 @@ namespace Prog_POE.Data
                 }
             );
 
-            // Seed data for products
+            // Seed data for products - provides initial product catalog
+            // Demonstrates various product types and attributes that can be listed
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
@@ -71,7 +80,7 @@ namespace Prog_POE.Data
                     Price = 25.99m,
                     IsOrganic = true,
                     ImageUrl = "/images/products/tomatoes.jpg",
-                    FarmerId = 2
+                    FarmerId = 2  // Links to Sarah Johnson's farm
                 },
                 new Product
                 {
@@ -83,7 +92,7 @@ namespace Prog_POE.Data
                     Price = 45.50m,
                     IsOrganic = true,
                     ImageUrl = "/images/products/eggs.jpg",
-                    FarmerId = 2
+                    FarmerId = 2  // Links to Sarah Johnson's farm
                 },
                 new Product
                 {
@@ -95,7 +104,7 @@ namespace Prog_POE.Data
                     Price = 180.00m,
                     IsOrganic = true,
                     ImageUrl = "/images/products/beef.jpg",
-                    FarmerId = 3
+                    FarmerId = 3  // Links to David Nkosi's farm
                 },
                 new Product
                 {
@@ -107,7 +116,7 @@ namespace Prog_POE.Data
                     Price = 85.75m,
                     IsOrganic = true,
                     ImageUrl = "/images/products/honey.jpg",
-                    FarmerId = 3
+                    FarmerId = 3  // Links to David Nkosi's farm
                 },
                 new Product
                 {
@@ -119,7 +128,7 @@ namespace Prog_POE.Data
                     Price = 18.99m,
                     IsOrganic = true,
                     ImageUrl = "/images/products/spinach.jpg",
-                    FarmerId = 2
+                    FarmerId = 2  // Links to Sarah Johnson's farm
                 }
             );
         }

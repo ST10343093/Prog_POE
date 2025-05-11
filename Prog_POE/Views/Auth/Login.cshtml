@@ -1,4 +1,5 @@
 ﻿@{
+    // Specify the title for this page and use the default layout
     ViewData["Title"] = "Login";
     Layout = "_Layout";
 }
@@ -11,11 +12,13 @@
                     <div class="row g-0">
                         <div class="col-12">
                             <div class="p-5">
+                                <!-- Header section with welcome message -->
                                 <div class="text-center mb-4">
                                     <h3 class="fw-bold text-success mb-2">Welcome Back!</h3>
                                     <p class="text-muted">Sign in to your account</p>
                                 </div>
 
+                                <!-- Error message display if authentication fails -->
                                 @if (ViewBag.Error != null)
                                 {
                                     <div class="alert alert-danger">
@@ -23,6 +26,7 @@
                                     </div>
                                 }
 
+                                <!-- Login form with username and password fields -->
                                 <form method="post" asp-action="Login">
                                     <div class="mb-4">
                                         <label for="username" class="form-label">Username</label>
@@ -47,6 +51,7 @@
                                         </div>
                                     </div>
 
+                                    <!-- Remember me option -->
                                     <div class="form-check mb-4">
                                         <input class="form-check-input" type="checkbox" id="rememberMe">
                                         <label class="form-check-label" for="rememberMe">
@@ -54,13 +59,15 @@
                                         </label>
                                     </div>
 
+                                    <!-- Submit button -->
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn btn-success btn-lg">Sign In</button>
                                     </div>
                                 </form>
 
+                                <!-- Information for new users -->
                                 <div class="text-center mt-4">
-                                    <p class="mb-0">Don't have an account? <a asp-action="Register" class="text-success fw-bold">Register</a></p>
+                                    <p class="mb-0">New to the platform? <span class="text-muted">Please contact an employee to create your account.</span></p>
                                 </div>
                             </div>
                         </div>
