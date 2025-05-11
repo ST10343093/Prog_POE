@@ -6,6 +6,31 @@ using Prog_POE.Helpers;
 
 namespace Prog_POE.Controllers
 {
+
+    /*
+--------------------------------Student Information----------------------------------
+STUDENT NO.: ST10343093
+Name: Arshad Shoaib Bhula
+Course: BCAD Year 3
+Module: Programming 3A - ENTERPRISE APPLICATION DEVELOPMENT 
+Module Code: PROG7311
+Assessment: Portfolio of Evidence (POE) Part 2
+Github repo link: https://github.com/ST10343093/Prog_POE
+--------------------------------Student Information----------------------------------
+
+==============================Code Attribution==================================
+
+MVC APP
+Author: Microsoft
+Link: https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?view=aspnetcore-9.0&tabs=visual-studio
+Date Accessed: 03 May 2025
+
+==============================Code Attribution==================================
+
+*/
+
+
+
     // Controls all authentication-related operations including login, logout, and registration
     public class AuthController : Controller
     {
