@@ -2,7 +2,7 @@
 
 <div align="center">
   
-  ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-7.0-blue?style=for-the-badge&logo=dotnet)
+  ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-9.0-blue?style=for-the-badge&logo=dotnet)
   ![C#](https://img.shields.io/badge/C%23-8.0-purple?style=for-the-badge&logo=csharp)
   ![SQL Server](https://img.shields.io/badge/SQL%20Server-2019-red?style=for-the-badge&logo=microsoftsqlserver)
   ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.0-blueviolet?style=for-the-badge&logo=bootstrap)
