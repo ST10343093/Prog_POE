@@ -40,7 +40,7 @@ The platform supports two primary user roles:
 
 ##  Technology Stack
 
-- **Framework**: ASP.NET Core 7.0 MVC
+- **Framework**: ASP.NET Core 9.0 MVC
 - **Frontend**: HTML5, CSS3, JavaScript, Bootstrap 5
 - **Backend**: C#, Entity Framework Core
 - **Database**: Microsoft SQL Server
